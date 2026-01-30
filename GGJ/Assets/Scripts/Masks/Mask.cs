@@ -2,27 +2,39 @@
 
 namespace Masks
 {
-    public delegate void MaskEvent();
+    public enum MaskType
+    {
+        None,
+        MeleeMask,
+        RangedMask,
+        KeyMask,
+        PlatformMask,
+        ForceFieldMask,
+    }
+    
+    public delegate void GeneralEvent();
     
     public abstract class Mask : MonoBehaviour
     {
-        public event MaskEvent OnMaskActivated;
-        public event MaskEvent OnMaskDeactivated;
+        public event GeneralEvent OnMaskActivated;
+        public event GeneralEvent OnMaskDeactivated;
 
-        private bool _isMaskActive = false;
+        private bool _isActive = false;
+        private MaskType _type = MaskType.None;
+        
+        public bool IsActive => _isActive;
+        public MaskType Type => _type;
         
         public virtual void Activate()
         {
-            _isMaskActive = true;
+            _isActive = true;
             OnMaskActivated?.Invoke();
         }
 
         public virtual void Deactivate()
         {
-            _isMaskActive = false;
+            _isActive = false;
             OnMaskDeactivated?.Invoke();
         }
-        
-        public bool IsMaskActive() => _isMaskActive;
     }
 }

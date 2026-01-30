@@ -11,6 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/44baafde34d548b79233aeeb474720f91fe00/3e/58132c96/Physics.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interaction/Interactable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
@@ -84,7 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1769791009672</updated>
       <workItem from="1769791011710" duration="1686000" />
-      <workItem from="1769794712740" duration="6163000" />
+      <workItem from="1769794712740" duration="10417000" />
     </task>
     <servers />
   </component>
