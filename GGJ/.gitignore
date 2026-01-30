@@ -20,6 +20,8 @@
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
+/_External/
+
 # Recordings can get excessive in size
 /[Rr]ecordings/
 
