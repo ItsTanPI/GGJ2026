@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 140001098}
   - component: {fileID: 140001100}
   - component: {fileID: 140001099}
+  - component: {fileID: 140001101}
   m_Layer: 0
   m_Name: PlayerA
   m_TagString: Untagged
@@ -213,6 +214,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &140001101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140001096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd028e58be4587142a7bdd4afe8bad79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &146216901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1258,6 +1271,7 @@ GameObject:
   - component: {fileID: 1243802893}
   - component: {fileID: 1243802892}
   - component: {fileID: 1243802891}
+  - component: {fileID: 1243802894}
   m_Layer: 0
   m_Name: PlayerB
   m_TagString: Untagged
@@ -1286,7 +1300,7 @@ MonoBehaviour:
   _gravity: -9.81
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   groundCheck: {fileID: 588137844}
   groundCheckHeight: 0.3
   isGrounded: 0
@@ -1338,6 +1352,18 @@ Transform:
   - {fileID: 1843305065}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1243802894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243802890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd028e58be4587142a7bdd4afe8bad79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1303498844
 GameObject:
   m_ObjectHideFlags: 0
