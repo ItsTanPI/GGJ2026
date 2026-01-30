@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private Gamepad myGamepad;
 
     public Movement _movement;
+    public Combat _combat;
 
     public void Init(InputDevice[] devices)
     {
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _movement = GetComponent<Movement>();
+        _combat = GetComponent<Combat>();
     }
 
     private void Update()
@@ -50,6 +52,11 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = moveAction?.ReadValue<Vector2>() ?? Vector2.zero;
         Vector2 lookInput = lookAction?.ReadValue<Vector2>() ?? Vector2.zero;
         _movement.Move(moveInput, lookInput);
+
+        if (inputActions.Player.StrongAttack.WasPerformedThisFrame())
+        {
+            _combat.Attack();
+        }
     }
 
     public void Vibrate(float low = 0.5f, float high = 0.5f, float duration = 0.1f)
