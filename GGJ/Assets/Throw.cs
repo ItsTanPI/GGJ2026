@@ -26,7 +26,8 @@ public class Throw : MonoBehaviour
     {
         canThrow = true;
         _animationSync = GetComponentInChildren<AnimationSync>();
-        
+        _animationSync.ThrowObject.AddListener(() => ThrowItemInHand());
+
     }
 
     bool isCharging = false;
@@ -74,12 +75,20 @@ public class Throw : MonoBehaviour
         isCharging = true;
     }
 
-
-
+    Vector2 lookDirection;
     public void ReleaseThrow(Vector2 direction)
     {
         if (!isCharging) return;
         isCharging = false;
+
+        lookDirection = new Vector2(transform.forward.x, transform.forward.z);
+        _animatorController.SetTrigger("Throw");
+    }
+
+
+    public void ThrowItemInHand()
+    {
+
 
         if (Disable) return;
         if (!canThrow) return;
@@ -94,13 +103,12 @@ public class Throw : MonoBehaviour
         Item.velocity = Vector3.zero;
         Item.angularVelocity = Vector3.zero;
 
-        Vector3 throwDir = new Vector3(direction.x, 1f, direction.y).normalized;
+        Vector3 throwDir = new Vector3(lookDirection.x, 1f, lookDirection.y).normalized;
         Item.AddForce(throwDir * finalForce, ForceMode.Impulse);
 
         Item = null;
 
         _animatorController.SetLayerWeight(1, 1);
-        _animatorController.SetTrigger("Throw");
 
         StartCoroutine(CoolDown());
     }
