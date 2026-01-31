@@ -58,7 +58,7 @@ Material:
     - _QueueOffset: 0
     - _Range: 10
     m_Colors:
-    - _PlayerA: {r: 2.8820512, g: -6.1846585, b: 4.160199, a: 0}
-    - _PlayerB: {r: -1.9079287, g: -7.324315, b: 10.409599, a: 0}
+    - _PlayerA: {r: 0.0908964, g: -7.045089, b: 9.694877, a: 0}
+    - _PlayerB: {r: 0.11224245, g: -5.7745686, b: -1.7074114, a: 0}
     - _WorldPosition: {r: 0, g: -0.35420078, b: 0, a: 0}
   m_BuildTextureStacks: []
