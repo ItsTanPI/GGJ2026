@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
     private InputMain inputActions;
     private InputAction moveAction;
     private InputAction lookAction;

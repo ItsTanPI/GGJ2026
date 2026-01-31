@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Combat : MonoBehaviour
 {
-    [SerializeField] Animator _animatorController;
+    /*[SerializeField] Animator _animatorController;
     [SerializeField] Trigger _Trigger;
     [SerializeField] int Damage;
     [SerializeField] float CoolDownTime;
@@ -56,5 +56,5 @@ public class Combat : MonoBehaviour
     private void OnEnable()
     {
         Disable = false;
-    }
+    }*/
 }
