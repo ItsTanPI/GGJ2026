@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6045273974148483146}
   - component: {fileID: 2636996396079637593}
   - component: {fileID: 5536351273448556910}
-  - component: {fileID: 1919609748580700356}
+  - component: {fileID: 8298747909976477703}
   m_Layer: 7
   m_Name: Item_anvil
   m_TagString: Untagged
@@ -189,7 +189,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1919609748580700356
+--- !u!114 &8298747909976477703
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5924112359637546426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a045e5cb602c74586786feee05e732, type: 3}
+  m_Script: {fileID: 11500000, guid: 912417174ab0b684da52458b1cad8323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentParrent: {fileID: 0}
+  currentParent: {fileID: 0}

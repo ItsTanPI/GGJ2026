@@ -7,5 +7,6 @@ namespace Interactables
     {
         [HideInInspector] public Throw currentParent = null;
         public override InteractionType GetInteractionType() => InteractionType.Pickup;
+        public override void Consume() {}
     }
 }

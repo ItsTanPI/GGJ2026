@@ -6,6 +6,6 @@ public class PickUp : MonoBehaviour
 {
     public Throw CurrentParrent;
 
-
+    
 
 }
