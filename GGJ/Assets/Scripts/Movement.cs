@@ -127,13 +127,13 @@ public class Movement : MonoBehaviour
     {
         if (isGrounded && velocity < 0)
         {
-            velocity = -5f;
+            velocity = -2f;
         }
         else if (!isGrounded && velocity < 0)
         {
             velocity += _gravity * Time.deltaTime * _gravityMultiplier;
         }
-        else if (!isGrounded && velocity > -5f)
+        else if (!isGrounded && velocity > -2f)
         {
             velocity += _gravity * Time.deltaTime * _gravityMultiplier;
         }
