@@ -7,6 +7,7 @@ namespace Interaction
     {
         Use,
         Pickup,
+        Mask
     }
     
     public abstract class Interactable : MonoBehaviour

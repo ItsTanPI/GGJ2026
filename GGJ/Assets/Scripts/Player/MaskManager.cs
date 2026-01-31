@@ -11,19 +11,19 @@ namespace Player
     {
         public event MaskEvent OnMaskChanged;
         
-        public MaskType currentMaskType = MaskType.ShrinkMask;
+        private MaskType _currentMaskType = MaskType.None;
 
         public void MaskPickedUp(MaskType maskType)
         {
-            OnMaskChanged?.Invoke(currentMaskType, maskType);
-            currentMaskType = maskType;
+            OnMaskChanged?.Invoke(_currentMaskType, maskType);
+            _currentMaskType = maskType;
         }
 
         public void MaskDropped(MaskType maskType)
         {
-            OnMaskChanged?.Invoke(currentMaskType, MaskType.None);
+            OnMaskChanged?.Invoke(_currentMaskType, MaskType.None);
 
-            switch (currentMaskType)
+            switch (_currentMaskType)
             {
                 case MaskType.None:
                     break;
@@ -37,14 +37,14 @@ namespace Player
                     throw new ArgumentOutOfRangeException();
             }
             
-            currentMaskType = MaskType.None;
+            _currentMaskType = MaskType.None;
         }
         
         public void TryActivateCurrentMask()
         {
-            Debug.Log("Attempting to activate the mask: " + currentMaskType.ToString());
+            Debug.Log("Attempting to activate the mask: " + _currentMaskType.ToString());
             
-            switch (currentMaskType)
+            switch (_currentMaskType)
             {
                 case MaskType.None:
                     break;

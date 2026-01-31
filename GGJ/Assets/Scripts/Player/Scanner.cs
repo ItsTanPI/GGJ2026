@@ -38,10 +38,18 @@ namespace Player
             
             _result?.Interact();
             
-            if (_result.GetInteractionType() == InteractionType.Pickup)
+            if (_result?.GetInteractionType() == InteractionType.Mask)
             {
                 MaskPickup mask = (MaskPickup)_result;
-                GetComponent<MaskManager>().MaskPickedUp(mask.GetMaskType());
+                if (mask.currentParent == null)
+                {
+                    GetComponent<MaskManager>().MaskPickedUp(mask.GetMaskType());
+                }
+            }
+
+            if (_result?.GetInteractionType() == InteractionType.Pickup)
+            {
+                //Do pickup stuff
             }
             
             _result?.Consume();

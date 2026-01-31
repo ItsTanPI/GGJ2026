@@ -45,7 +45,7 @@ public class Shrink : MonoBehaviour
         isShrinking = false;
         isShrunk = !isShrunk;
         
-        StopCoroutine(nameof(Cooldown));
+        StartCoroutine(nameof(Cooldown));
     }
     
     IEnumerator Cooldown()
