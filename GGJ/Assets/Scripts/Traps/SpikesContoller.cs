@@ -5,6 +5,7 @@ public class SpikesController : MonoBehaviour
 {
     [Header("References")]
     public Transform spikeMesh;
+    private Vector3 originalPosition;
 
     [Header("Timing Settings")]
     public float timeUp = 5.0f;    // Longer duration
@@ -25,6 +26,7 @@ public class SpikesController : MonoBehaviour
 
     void Start()
     {
+        originalPosition = spikeMesh.localPosition;
         extendedPosition = spikeMesh.localPosition;
         retractedPosition = extendedPosition - retractOffset;
         StartCoroutine(SpikeRoutine());
@@ -37,7 +39,7 @@ public class SpikesController : MonoBehaviour
         while (true)
         {
             // Move Up
-            yield return StartCoroutine(LerpPosition(retractedPosition ));
+            yield return StartCoroutine(LerpPosition(retractedPosition));
             yield return new WaitForSeconds(timeUp);
 
             // Move Down
@@ -68,5 +70,16 @@ public class SpikesController : MonoBehaviour
         }
 
         spikeMesh.localPosition = target;
+    }
+
+    public void StopRoutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(LerpPosition(originalPosition));
+    }
+
+    public void StartRoutine()
+    {
+        StartCoroutine(SpikeRoutine());
     }
 }
