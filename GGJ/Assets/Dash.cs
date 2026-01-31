@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,13 @@ public class Dash : MonoBehaviour
     private Vector3 dashDirection = Vector3.zero;
     private Vector3 startPosition;
 
-    public void TryDash(Vector2 direction)
+    public void TryDash(Vector3 direction)
     {
         if (isDashing) return;
         dashDirection = direction;
         startPosition = transform.position;
         
+        StopCoroutine(nameof(DashCoroutine));
         StartCoroutine(nameof(DashCoroutine));
     }
 
@@ -26,11 +28,6 @@ public class Dash : MonoBehaviour
 
         float radius = 0.5f;
         float finalDistance = dashDistance;
-        
-        if (Physics.SphereCast(startPosition, radius, dashDirection, out RaycastHit hit, dashDistance))
-        {
-            finalDistance = hit.distance - 0.1f;
-        }
 
         Vector3 targetPosition = startPosition + dashDirection * finalDistance;
         
@@ -50,5 +47,11 @@ public class Dash : MonoBehaviour
         transform.position = targetPosition;
         GetComponent<Movement>().enabled = true;
         isDashing = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + dashDirection * dashDistance, 0.5f);
     }
 }
