@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Masks;
 using Player;
 using UnityEngine.UI;
 
@@ -14,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private Gamepad myGamepad;
 
     public Movement _movement;
-    public Combat _combat;
     public Throw _Throw;
     private MaskManager _maskManager;
 
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _movement = GetComponent<Movement>();
-        _combat = GetComponent<Combat>();
         _Throw = GetComponent<Throw>();
         _maskManager = GetComponent<MaskManager>();
     }
@@ -55,19 +54,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.rKey.wasPressedThisFrame)
-        {
-            var scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.buildIndex);
-        }
-
         Vector2 moveInput = moveAction?.ReadValue<Vector2>() ?? Vector2.zero;
         Vector2 lookInput = lookAction?.ReadValue<Vector2>() ?? Vector2.zero;
-        _movement.Move(moveInput, lookInput);
+
+        if (_maskManager.CurrentMaskType != MaskType.NecroMask || !GetComponent<Necro>().IsPuppeteering)
+        {
+            _movement.Move(moveInput, lookInput);
+        }
+        
+        _maskManager.CacheInput(moveInput, lookInput);
         
         if (inputActions.Player.ActivateMask.ReadValue<float>() > 0)
         {
-            // _combat.LightAttack();
             _maskManager.TryActivateCurrentMask();
         }
 
@@ -83,6 +81,10 @@ public class PlayerController : MonoBehaviour
         if (attack.WasPressedThisFrame())
         {
             _Throw.StartCharging();
+            if (_maskManager.CurrentMaskType == MaskType.NecroMask && GetComponent<Necro>().IsPuppeteering)
+            {
+                GetComponent<Necro>().KillSkeleton();
+            }
         }
 
         if (attack.WasReleasedThisFrame())
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    
     IEnumerator Cooldown()
     {
         isInteractionInCooldown = true;

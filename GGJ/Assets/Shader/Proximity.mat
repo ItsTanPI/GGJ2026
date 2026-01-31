@@ -59,6 +59,6 @@ Material:
     - _Range: 10
     m_Colors:
     - _PlayerA: {r: 2.8820512, g: -6.1846585, b: 4.160199, a: 0}
-    - _PlayerB: {r: -1.9079287, g: -7.324315, b: 10.409599, a: 0}
+    - _PlayerB: {r: -7.95048, g: -6.7550626, b: 1.9358395, a: 0}
     - _WorldPosition: {r: 0, g: -0.35420078, b: 0, a: 0}
   m_BuildTextureStacks: []
