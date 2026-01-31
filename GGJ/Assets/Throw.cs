@@ -4,12 +4,14 @@ using Interactables;
 using Player;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Throw : MonoBehaviour
 {
     [SerializeField] Transform Hand;
+    [SerializeField] Transform MaskSlot;
     [SerializeField] Transform HandSlot;
 
     [SerializeField] Animator _animatorController;
@@ -19,7 +21,9 @@ public class Throw : MonoBehaviour
     [SerializeField] float CoolDownTime;
     [SerializeField] bool canThrow;
     [SerializeField] bool isHolding;
-    public Rigidbody Item;
+
+    public Rigidbody Item { get; private set; }
+    
     bool Disable;
 
     [SerializeField] float Radius;
@@ -37,12 +41,12 @@ public class Throw : MonoBehaviour
 
     bool isCharging = false;
     float holdTime = 0;
+    
     private void Update()
     {
         if (Item)
         {
             isHolding = true;
-
 
             if (isCharging)
             {
@@ -52,11 +56,9 @@ public class Throw : MonoBehaviour
                 float chargeNormalized = holdTime / MaxTime;
 
                 _animatorController.Play("Charge", 1, chargeNormalized);
-
+                
+                Item.transform.SetParent(HandSlot, false);
             }
-
-            Item.Sleep();
-            Item.position = HandSlot.position;
         }
         else
         {
@@ -67,9 +69,34 @@ public class Throw : MonoBehaviour
         _animatorController.SetBool("Holding", isHolding);
     }
 
+    public void AttachRigidbody(Rigidbody rb, bool isMask)
+    {
+        if (rb == null) return;
+        
+        Item = rb;
+        Item.transform.SetParent(isMask ? MaskSlot : Hand, false);
+        Item.transform.localPosition = Vector3.zero;
+        Item.transform.localRotation = Quaternion.identity;
+        Item.isKinematic = true;
+        Item.detectCollisions = false;
+    }
 
-
-
+    public void ReleaseRigidbody()
+    {
+        if (Item == null) return;
+        
+        Item.transform.SetParent(null);
+        Item.transform.localPosition = HandSlot.position;
+        Item.isKinematic = false;
+        Item.detectCollisions = true;
+    }
+    
+    public void ReleaseRigidbodyAndForget()
+    {
+        ReleaseRigidbody();
+        Item = null;
+    }
+    
     public void StartCharging()
     {
         if (Disable) return;
@@ -85,16 +112,13 @@ public class Throw : MonoBehaviour
     {
         if (!isCharging) return;
         isCharging = false;
-
+        
         lookDirection = new Vector2(transform.forward.x, transform.forward.z);
         _animatorController.SetTrigger("Throw");
     }
-
-
+  
     public void ThrowItemInHand()
     {
-
-
         if (Disable) return;
         if (!canThrow) return;
         if (Item == null) return;
@@ -104,9 +128,11 @@ public class Throw : MonoBehaviour
 
         float finalForce = Mathf.Lerp(MinForce, MaxForce, chargePercent);
 
+        ReleaseRigidbody();
+        
         Item.position = HandSlot.position;
         Item.velocity = Vector3.zero;
-        Item.angularVelocity = Vector3.zero;
+        Item.angularVelocity = Random.insideUnitSphere;
 
         Vector3 throwDir = new Vector3(lookDirection.x, 1f, lookDirection.y).normalized;
         Item.AddForce(throwDir * finalForce, ForceMode.Impulse);
