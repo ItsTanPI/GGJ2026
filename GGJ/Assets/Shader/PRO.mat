@@ -55,8 +55,8 @@ Material:
     - _IsActiveB: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Range: 1
+    - _Range: 10
     m_Colors:
     - _PlayerA: {r: 0, g: 0, b: 0, a: 0}
-    - _PlayerB: {r: 0, g: 0, b: 0, a: 0}
+    - _PlayerB: {r: -3.6921012, g: -7.722867, b: 12.182686, a: 0}
   m_BuildTextureStacks: []

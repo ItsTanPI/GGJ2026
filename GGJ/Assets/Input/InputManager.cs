@@ -1,5 +1,7 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
@@ -25,14 +27,22 @@ public class InputManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
     private void OnDisable()
     {
-        inputMain.Disable();
+        inputMain?.Disable();
     }
 
     private void OnEnable()
     {
-        inputMain.Enable();
+        inputMain?.Enable();
     }
 
 }
