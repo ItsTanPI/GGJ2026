@@ -12,7 +12,13 @@ namespace Player
         [SerializeField] private LayerMask layerMask;
 
         private Interactable _result = null;
-        
+        private Throw throwScript;
+
+        private void Start()
+        {
+            throwScript = GetComponent<Throw>();
+        }
+
         private void FixedUpdate()
         {
             Collider[] hits = Physics.OverlapSphere(transform.position + transform.forward * offset, collisionRadius, layerMask);
@@ -23,9 +29,9 @@ namespace Player
             {
                 Interactable interactable = hits[i].GetComponent<Interactable>();
                 
-                if (interactable != null)
+                if (interactable != null && throwScript.Item != interactable.GetComponent<Rigidbody>())
                 {
-                    //Debug.Log(interactable.name);
+                    Debug.Log(interactable.name);
                     _result = interactable;
                     break;
                 }
@@ -38,18 +44,20 @@ namespace Player
             
             _result?.Interact();
             
-            if (_result?.GetInteractionType() == InteractionType.Mask)
+            if (_result is BasicPickup)
             {
-                MaskPickup mask = (MaskPickup)_result;
-                if (mask.currentParent == null)
-                {
-                    GetComponent<MaskManager>().MaskPickedUp(mask.GetMaskType());
-                }
-            }
+                Rigidbody rb = _result.GetComponent<Rigidbody>();
 
-            if (_result?.GetInteractionType() == InteractionType.Pickup)
-            {
-                //Do pickup stuff
+                Debug.Log("Basic Pickup: " + rb.gameObject.name);
+                
+                throwScript.Item = rb;
+                ((BasicPickup)_result).currentParent = throwScript;
+
+                if (_result is MaskPickup)
+                {
+                    Debug.Log("Mask Pickup: " + _result.gameObject.name);
+                    GetComponent<MaskManager>().MaskPickedUp(((MaskPickup)_result).GetMaskType());
+                }
             }
             
             _result?.Consume();

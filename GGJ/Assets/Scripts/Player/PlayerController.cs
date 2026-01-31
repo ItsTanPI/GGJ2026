@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public Combat _combat;
     public Throw _Throw;
     private MaskManager _maskManager;
+
+    [SerializeField] private float interactionCooldown = 0.2f;
+    private bool isInteractionInCooldown = false;
     
     public void Init(InputDevice[] devices)
     {
@@ -69,9 +72,11 @@ public class PlayerController : MonoBehaviour
             _maskManager.TryActivateCurrentMask();
         }
 
-        if (interactAction?.ReadValue<float>() > 0)
+        if (interactAction?.ReadValue<float>() > 0 && !isInteractionInCooldown)
         {
             GetComponent<Scanner>().InteractInputPressed();
+            StopCoroutine(nameof(Cooldown));
+            StartCoroutine(nameof(Cooldown));
         }
 
         var attack = inputActions.Player.Throw;
@@ -88,11 +93,18 @@ public class PlayerController : MonoBehaviour
 
         if(interactAction.WasPerformedThisFrame())
         {
-            _Throw.GetFirstObjectOnLayer();
+            //_Throw.GetFirstObjectOnLayer();
         }
 
     }
 
+    IEnumerator Cooldown()
+    {
+        isInteractionInCooldown = true;
+        yield return new WaitForSeconds(interactionCooldown);
+        isInteractionInCooldown = false;
+    }
+    
     public void Vibrate(float low = 0.5f, float high = 0.5f, float duration = 0.1f)
     {
         if (myGamepad != null)

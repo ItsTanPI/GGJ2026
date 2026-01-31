@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Interactables;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -51,9 +52,9 @@ public class PickItems : MonoBehaviour
         rb.drag = 0.3f;
 
         // 4. PickUp Script (Assuming the script name is PickUp)
-        if (GetComponent<PickUp>() == null)
+        if (GetComponent<BasicPickup>() == null)
         {
-            gameObject.AddComponent<PickUp>();
+            gameObject.AddComponent<BasicPickup>();
         }
 
         // Rename for clarity in Hierarchy

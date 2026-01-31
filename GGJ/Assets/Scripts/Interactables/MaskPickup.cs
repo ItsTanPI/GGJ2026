@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace Interactables
 {
-    public class MaskPickup : Interactable
+    public class MaskPickup : BasicPickup
     {
         [SerializeField] private MaskType maskType = MaskType.DashMask;
-        [HideInInspector] public Throw currentParent = null;
 
         public override InteractionType GetInteractionType() => InteractionType.Mask;
 

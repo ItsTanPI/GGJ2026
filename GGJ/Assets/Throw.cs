@@ -125,13 +125,13 @@ public class Throw : MonoBehaviour
         StartCoroutine(CoolDown());
     }
 
-    public void GetFirstObjectOnLayer()
+    /*public void GetFirstObjectOnLayer()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, Radius, LayertoPickUp);
 
         if (hits.Length == 0) return;
 
-        MaskPickup PUS = hits[0].GetComponentInParent<MaskPickup>();
+        BasicPickup PUS = hits[0].GetComponentInParent<BasicPickup>();
         if (!PUS) return;
 
         if (PUS.currentParent && PUS.currentParent != this)
@@ -142,7 +142,7 @@ public class Throw : MonoBehaviour
         PUS.currentParent = this;
 
         Item = hits[0].attachedRigidbody;
-    }
+    }*/
 
 
     void OnDrawGizmos()
