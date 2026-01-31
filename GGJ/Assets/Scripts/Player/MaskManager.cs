@@ -9,6 +9,8 @@ namespace Player
     
     public class MaskManager : MonoBehaviour
     {
+        
+        public Animator animator;
         public event MaskEvent OnMaskChanged;
         
         private MaskType _currentMaskType = MaskType.None;
@@ -48,6 +50,7 @@ namespace Player
         
         public void TryActivateCurrentMask()
         {
+            animator?.SetTrigger("Resurrect");
             Debug.Log("Attempting to activate the mask: " + _currentMaskType.ToString());
             
             switch (_currentMaskType)

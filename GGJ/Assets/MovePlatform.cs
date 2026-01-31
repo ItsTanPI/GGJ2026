@@ -9,6 +9,7 @@ public class MovePlatform : MonoBehaviour
     public float speed = 2.0f;
     
     private Vector3 target;
+    private bool isMoving = true;
 
     void Start()
     {
@@ -18,6 +19,8 @@ public class MovePlatform : MonoBehaviour
 
     void Update()
     {
+        if (!isMoving) return;
+        
         // Constant movement between points
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
@@ -26,5 +29,15 @@ public class MovePlatform : MonoBehaviour
         {
             target = (target == pointA.position) ? pointB.position : pointA.position;
         }
+    }
+
+    public void StopRoutine()
+    {
+        isMoving = false;
+    }
+
+    public void StartRoutine()
+    {
+        isMoving = true;
     }
 }
