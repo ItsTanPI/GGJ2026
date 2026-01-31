@@ -7,7 +7,8 @@ namespace Masks
         None,
         DashMask,
         ShrinkMask,
-        KeyMask
+        KeyMask,
+        NecroMask
     }
     
     public delegate void GeneralEvent();

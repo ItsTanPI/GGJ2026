@@ -250,4 +250,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentParent: {fileID: 0}
-  maskType: 3
+  maskType: 4

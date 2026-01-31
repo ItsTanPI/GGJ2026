@@ -9,11 +9,18 @@ namespace Player
     
     public class MaskManager : MonoBehaviour
     {
-        
         public event MaskEvent OnMaskChanged;
         
         private MaskType _currentMaskType = MaskType.None;
+        public MaskType CurrentMaskType => _currentMaskType;
 
+        //Cached input
+        private Vector2 _moveInput = Vector2.zero;
+        private Vector2 _lookInput = Vector2.zero;
+
+        public Vector2 MoveInput => _moveInput;
+        public Vector2 LookInput => _lookInput;
+        
         public void MaskPickedUp(MaskType maskType)
         {
             Debug.Log("Mask Picked Up: " + maskType);
@@ -40,6 +47,9 @@ namespace Player
                 case MaskType.KeyMask:
                     GetComponent<Key>().TurnOff();
                     break;
+                case MaskType.NecroMask:
+                    GetComponent<Necro>().KillSkeleton();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -64,9 +74,19 @@ namespace Player
                 case MaskType.KeyMask:
                     GetComponent<Key>().TurnON();
                     break;
+                case MaskType.NecroMask:
+                    GetComponent<Necro>().FireNecroProjectile();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+        
+        //For necromask
+        public void CacheInput(Vector2 moveInput, Vector2 lookInput)
+        {
+            _moveInput = moveInput;
+            _lookInput = lookInput;
         }
     }
 }
