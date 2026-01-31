@@ -49,10 +49,31 @@ namespace Player
                 Rigidbody rb = _result.GetComponent<Rigidbody>();
 
                 Debug.Log("Basic Pickup: " + rb.gameObject.name);
+
+                //If holding a BasicPickup, release it
+                throwScript.ReleaseRigidbodyAndForget();
                 
-                throwScript.Item = rb;
+                //If currently holding a mask, release it, inform the MaskManager
+                if (throwScript.Item && throwScript.Item.GetComponent<MaskPickup>())
+                {
+                    var currentMask = throwScript.Item?.GetComponent<MaskPickup>();
+                    currentMask.Throw();
+                    GetComponent<MaskManager>().MaskDropped(currentMask.GetMaskType());
+                }
+                
+                //Unset rigidbody settings of previously held items
+                if (throwScript.Item)
+                {
+                    throwScript.Item.isKinematic = false;
+                    throwScript.Item.detectCollisions = true;
+                    throwScript.Item.transform.SetParent(null);
+                }
+                
+                //If new pickup, hold it
+                throwScript.AttachRigidbody(rb, _result is MaskPickup);
                 ((BasicPickup)_result).currentParent = throwScript;
 
+                //If new pickup is mask, inform the MaskManager
                 if (_result is MaskPickup)
                 {
                     Debug.Log("Mask Pickup: " + _result.gameObject.name);
