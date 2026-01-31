@@ -72,6 +72,11 @@ public class Health : MonoBehaviour
         Heal(maxHealth);
     }
 
+    public void Death()
+    {
+        TakeDamage(currentHealth);
+    }
+
     public void SetInvulnerable(bool state)
     {
         invulnerable = state;
