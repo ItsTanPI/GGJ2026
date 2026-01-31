@@ -15,6 +15,7 @@ namespace Player
 
         public void MaskPickedUp(MaskType maskType)
         {
+            Debug.Log("Mask Picked Up: " + maskType);
             OnMaskChanged?.Invoke(_currentMaskType, maskType);
             _currentMaskType = maskType;
         }

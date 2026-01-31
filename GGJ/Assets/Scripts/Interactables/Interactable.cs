@@ -5,6 +5,7 @@ namespace Interaction
 {
     public enum InteractionType
     {
+        None,
         Use,
         Pickup,
         Mask
@@ -12,8 +13,8 @@ namespace Interaction
     
     public abstract class Interactable : MonoBehaviour
     {
-        public virtual InteractionType GetInteractionType() => InteractionType.Pickup;
+        public virtual InteractionType GetInteractionType() => InteractionType.None;
         public virtual void Interact() {}
-        public virtual void Consume() => Destroy(gameObject);
+        public virtual void Consume() {}
     }
 }

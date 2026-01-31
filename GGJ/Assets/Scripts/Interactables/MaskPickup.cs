@@ -8,7 +8,9 @@ namespace Interactables
     {
         [SerializeField] private MaskType maskType = MaskType.DashMask;
         [HideInInspector] public Throw currentParent = null;
-        
+
+        public override InteractionType GetInteractionType() => InteractionType.Mask;
+
         public MaskType GetMaskType() => maskType;
 
         //Mask remains alive with player
