@@ -6,7 +6,8 @@ namespace Masks
     {
         None,
         DashMask,
-        ShrinkMask
+        ShrinkMask,
+        KeyMask
     }
     
     public delegate void GeneralEvent();

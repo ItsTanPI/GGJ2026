@@ -18,6 +18,8 @@ namespace Player
             Debug.Log("Mask Picked Up: " + maskType);
             OnMaskChanged?.Invoke(_currentMaskType, maskType);
             _currentMaskType = maskType;
+            if (maskType == MaskType.KeyMask)
+                GetComponent<Key>().TurnON();
         }
 
         public void MaskDropped(MaskType maskType)
@@ -33,6 +35,9 @@ namespace Player
                     break;
                 case MaskType.ShrinkMask:
                     GetComponent<Shrink>().RevertShrink();
+                    break;
+                case MaskType.KeyMask:
+                    GetComponent<Key>().TurnOff();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -54,6 +59,9 @@ namespace Player
                     break;
                 case MaskType.ShrinkMask:
                     GetComponent<Shrink>().TryToggleShrink();
+                    break;
+                case MaskType.KeyMask:
+                    GetComponent<Key>().TurnON();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
