@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour
             _Throw.ReleaseThrow(lookInput);
         }
 
+        if(inputActions.Player.Combat.WasPerformedThisFrame())
+        {
+            _Throw.GetFirstObjectOnLayer();
+        }
 
     }
 

@@ -17,8 +17,11 @@ public class Throw : MonoBehaviour
     [SerializeField] float CoolDownTime;
     [SerializeField] bool canThrow;
     [SerializeField] bool isHolding;
-    [SerializeField] Rigidbody Item;
+    public Rigidbody Item;
     bool Disable;
+
+    [SerializeField] float Radius;
+    [SerializeField] LayerMask LayertoPickUp;
 
     public AnimationSync _animationSync;
 
@@ -37,6 +40,7 @@ public class Throw : MonoBehaviour
         if (Item)
         {
             isHolding = true;
+
 
             if (isCharging)
             {
@@ -57,7 +61,6 @@ public class Throw : MonoBehaviour
             isHolding = false;
         }
 
-        Debug.Log(isHolding);
 
         _animatorController.SetBool("Holding", isHolding);
     }
@@ -113,7 +116,31 @@ public class Throw : MonoBehaviour
         StartCoroutine(CoolDown());
     }
 
+    public void GetFirstObjectOnLayer()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, Radius, LayertoPickUp);
 
+        if (hits.Length == 0) return;
+
+        PickUp PUS = hits[0].GetComponentInParent<PickUp>();
+        if (PUS == null) return;
+
+        if (PUS.CurrentParrent != null && PUS.CurrentParrent != this)
+        {
+            PUS.CurrentParrent.Item = null;
+        }
+
+        PUS.CurrentParrent = this;
+
+        Item = hits[0].attachedRigidbody;
+    }
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green; 
+        Gizmos.DrawWireSphere(transform.position, Radius);
+    }
 
     IEnumerator CoolDown()
     {
