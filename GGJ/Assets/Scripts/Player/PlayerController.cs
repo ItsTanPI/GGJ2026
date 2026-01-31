@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private InputMain inputActions;
     private InputAction moveAction;
     private InputAction lookAction;
+    private InputAction interactAction;
     private Gamepad myGamepad;
 
     public Movement _movement;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
         moveAction = inputActions.Player.Move;
         lookAction = inputActions.Player.Look;
+        interactAction = inputActions.Player.Interact;
         inputActions.Player.Enable();
 
         foreach (var device in devices)
@@ -61,13 +63,18 @@ public class PlayerController : MonoBehaviour
         Vector2 lookInput = lookAction?.ReadValue<Vector2>() ?? Vector2.zero;
         _movement.Move(moveInput, lookInput);
         
-        if (inputActions.Player.LightAttack.ReadValue<float>() > 0)
+        if (inputActions.Player.ActivateMask.ReadValue<float>() > 0)
         {
-            _combat.LightAttack();
+            // _combat.LightAttack();
             _maskManager.TryActivateCurrentMask();
         }
 
-        var attack = inputActions.Player.StrongAttack;
+        if (interactAction?.ReadValue<float>() > 0)
+        {
+            GetComponent<Scanner>().InteractInputPressed();
+        }
+
+        var attack = inputActions.Player.Throw;
 
         if (attack.WasPressedThisFrame())
         {
@@ -79,7 +86,7 @@ public class PlayerController : MonoBehaviour
             _Throw.ReleaseThrow(lookInput);
         }
 
-        if(inputActions.Player.Combat.WasPerformedThisFrame())
+        if(interactAction.WasPerformedThisFrame())
         {
             _Throw.GetFirstObjectOnLayer();
         }

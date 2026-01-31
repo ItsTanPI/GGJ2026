@@ -25,22 +25,14 @@ namespace Player
                 
                 if (interactable != null)
                 {
-                    Debug.Log(interactable.name);
+                    //Debug.Log(interactable.name);
                     _result = interactable;
                     break;
                 }
             }
         }
 
-        private void Update()
-        {
-            //if (Input.GetKeyDown(KeyCode.E))
-            {
-                InteractInputPressed();
-            }
-        }
-
-        private void InteractInputPressed()
+        public void InteractInputPressed()
         {
             if (_result == null) return;
             

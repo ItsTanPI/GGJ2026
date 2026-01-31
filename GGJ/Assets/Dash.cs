@@ -7,6 +7,9 @@ public class Dash : MonoBehaviour
 {
     [SerializeField] private float dashDistance = 3f;
     [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashCooldown = 2f;
+    
+    private bool isCoolingDown = false;
     private bool isDashing = false;
     private Vector3 dashDirection = Vector3.zero;
     private Vector3 startPosition;
@@ -14,10 +17,11 @@ public class Dash : MonoBehaviour
     public void TryDash(Vector3 direction)
     {
         if (isDashing) return;
+        if(isCoolingDown) return;
         dashDirection = direction;
         startPosition = transform.position;
         
-        StopCoroutine(nameof(DashCoroutine));
+        StopAllCoroutines();
         StartCoroutine(nameof(DashCoroutine));
     }
 
@@ -47,8 +51,23 @@ public class Dash : MonoBehaviour
         transform.position = targetPosition;
         GetComponent<Movement>().enabled = true;
         isDashing = false;
+
+        StartCoroutine(Cooldown());
     }
 
+    IEnumerator Cooldown()
+    {
+        isCoolingDown = true;
+        yield return new WaitForSeconds(dashCooldown);
+        isCoolingDown = false;
+    }
+
+    //Called when mask dropped
+    public void RevertDash()
+    {
+        StopAllCoroutines();
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

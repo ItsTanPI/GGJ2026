@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LightAttack",
+                    "name": "ActivateMask",
                     "type": "Button",
                     "id": "c8b993e1-b138-492e-854e-736bafa0d486",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StrongAttack",
+                    "name": "Throw",
                     "type": "Button",
                     "id": "c88d603b-aecd-4ce7-9907-a6b2285e822f",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Combat",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "eddfb152-0616-4e80-8d0f-0054138d271c",
                     "expectedControlType": "Button",
@@ -187,7 +187,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "LightAttack",
+                    "action": "ActivateMask",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +198,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "LightAttack",
+                    "action": "ActivateMask",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,7 +231,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "StrongAttack",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -242,7 +242,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "StrongAttack",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -275,7 +275,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Combat",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -286,7 +286,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Combat",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

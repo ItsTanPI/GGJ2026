@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Interactables;
+using Player;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -109,6 +111,13 @@ public class Throw : MonoBehaviour
         Vector3 throwDir = new Vector3(lookDirection.x, 1f, lookDirection.y).normalized;
         Item.AddForce(throwDir * finalForce, ForceMode.Impulse);
 
+        MaskPickup mask = Item.GetComponent<MaskPickup>();
+        if (mask)
+        {
+            mask.Throw();
+            GetComponent<MaskManager>().MaskDropped(mask.GetMaskType());
+        }
+
         Item = null;
 
         _animatorController.SetLayerWeight(1, 1);
@@ -122,15 +131,15 @@ public class Throw : MonoBehaviour
 
         if (hits.Length == 0) return;
 
-        PickUp PUS = hits[0].GetComponentInParent<PickUp>();
-        if (PUS == null) return;
+        MaskPickup PUS = hits[0].GetComponentInParent<MaskPickup>();
+        if (!PUS) return;
 
-        if (PUS.CurrentParrent != null && PUS.CurrentParrent != this)
+        if (PUS.currentParent && PUS.currentParent != this)
         {
-            PUS.CurrentParrent.Item = null;
+            PUS.currentParent.Item = null;
         }
 
-        PUS.CurrentParrent = this;
+        PUS.currentParent = this;
 
         Item = hits[0].attachedRigidbody;
     }

@@ -46,7 +46,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LightAttack"",
+                    ""name"": ""ActivateMask"",
                     ""type"": ""Button"",
                     ""id"": ""c8b993e1-b138-492e-854e-736bafa0d486"",
                     ""expectedControlType"": ""Button"",
@@ -55,7 +55,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StrongAttack"",
+                    ""name"": ""Throw"",
                     ""type"": ""Button"",
                     ""id"": ""c88d603b-aecd-4ce7-9907-a6b2285e822f"",
                     ""expectedControlType"": ""Button"",
@@ -73,7 +73,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Combat"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""eddfb152-0616-4e80-8d0f-0054138d271c"",
                     ""expectedControlType"": ""Button"",
@@ -209,7 +209,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""LightAttack"",
+                    ""action"": ""ActivateMask"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -220,7 +220,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""LightAttack"",
+                    ""action"": ""ActivateMask"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -253,7 +253,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""StrongAttack"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -264,7 +264,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""StrongAttack"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -297,7 +297,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Combat"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -308,7 +308,7 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Combat"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -920,10 +920,10 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
-        m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
-        m_Player_StrongAttack = m_Player.FindAction("StrongAttack", throwIfNotFound: true);
+        m_Player_ActivateMask = m_Player.FindAction("ActivateMask", throwIfNotFound: true);
+        m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Combat = m_Player.FindAction("Combat", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1000,10 +1000,10 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Walk;
-    private readonly InputAction m_Player_LightAttack;
-    private readonly InputAction m_Player_StrongAttack;
+    private readonly InputAction m_Player_ActivateMask;
+    private readonly InputAction m_Player_Throw;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Combat;
+    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Dodge;
     public struct PlayerActions
     {
@@ -1011,10 +1011,10 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
         public PlayerActions(@InputMain wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
-        public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
-        public InputAction @StrongAttack => m_Wrapper.m_Player_StrongAttack;
+        public InputAction @ActivateMask => m_Wrapper.m_Player_ActivateMask;
+        public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Combat => m_Wrapper.m_Player_Combat;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1031,18 +1031,18 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
-            @LightAttack.started += instance.OnLightAttack;
-            @LightAttack.performed += instance.OnLightAttack;
-            @LightAttack.canceled += instance.OnLightAttack;
-            @StrongAttack.started += instance.OnStrongAttack;
-            @StrongAttack.performed += instance.OnStrongAttack;
-            @StrongAttack.canceled += instance.OnStrongAttack;
+            @ActivateMask.started += instance.OnActivateMask;
+            @ActivateMask.performed += instance.OnActivateMask;
+            @ActivateMask.canceled += instance.OnActivateMask;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Combat.started += instance.OnCombat;
-            @Combat.performed += instance.OnCombat;
-            @Combat.canceled += instance.OnCombat;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
@@ -1056,18 +1056,18 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
-            @LightAttack.started -= instance.OnLightAttack;
-            @LightAttack.performed -= instance.OnLightAttack;
-            @LightAttack.canceled -= instance.OnLightAttack;
-            @StrongAttack.started -= instance.OnStrongAttack;
-            @StrongAttack.performed -= instance.OnStrongAttack;
-            @StrongAttack.canceled -= instance.OnStrongAttack;
+            @ActivateMask.started -= instance.OnActivateMask;
+            @ActivateMask.performed -= instance.OnActivateMask;
+            @ActivateMask.canceled -= instance.OnActivateMask;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Combat.started -= instance.OnCombat;
-            @Combat.performed -= instance.OnCombat;
-            @Combat.canceled -= instance.OnCombat;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
@@ -1255,10 +1255,10 @@ public partial class @InputMain: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
-        void OnLightAttack(InputAction.CallbackContext context);
-        void OnStrongAttack(InputAction.CallbackContext context);
+        void OnActivateMask(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnCombat(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
     }
     public interface IUIActions

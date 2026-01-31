@@ -1,5 +1,6 @@
 ﻿using System;
 using Masks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player
@@ -10,7 +11,7 @@ namespace Player
     {
         public event MaskEvent OnMaskChanged;
         
-        [HideInInspector] public MaskType currentMaskType = MaskType.DashMask;
+        public MaskType currentMaskType = MaskType.ShrinkMask;
 
         public void MaskPickedUp(MaskType maskType)
         {
@@ -18,17 +19,40 @@ namespace Player
             currentMaskType = maskType;
         }
 
-        public void TryActivateCurrentMask()
+        public void MaskDropped(MaskType maskType)
         {
+            OnMaskChanged?.Invoke(currentMaskType, MaskType.None);
+
             switch (currentMaskType)
             {
                 case MaskType.None:
                     break;
                 case MaskType.DashMask:
-                    Debug.Log("Dashing!");
+                    GetComponent<Dash>().RevertDash();
+                    break;
+                case MaskType.ShrinkMask:
+                    GetComponent<Shrink>().RevertShrink();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            currentMaskType = MaskType.None;
+        }
+        
+        public void TryActivateCurrentMask()
+        {
+            Debug.Log("Attempting to activate the mask: " + currentMaskType.ToString());
+            
+            switch (currentMaskType)
+            {
+                case MaskType.None:
+                    break;
+                case MaskType.DashMask:
                     GetComponent<Dash>().TryDash(transform.forward);
                     break;
                 case MaskType.ShrinkMask:
+                    GetComponent<Shrink>().TryToggleShrink();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
