@@ -10,31 +10,28 @@ namespace Player
     {
         public event MaskEvent OnMaskChanged;
         
-        private Mask _currentMask = null;
+        [HideInInspector] public MaskType currentMaskType = MaskType.DashMask;
 
         public void MaskPickedUp(MaskType maskType)
         {
-            OnMaskChanged?.Invoke(_currentMask == null ? MaskType.None : _currentMask.Type, maskType);
+            OnMaskChanged?.Invoke(currentMaskType, maskType);
+            currentMaskType = maskType;
+        }
 
-            if (_currentMask != null) Destroy(_currentMask);
-
-            switch (maskType)
+        public void TryActivateCurrentMask()
+        {
+            switch (currentMaskType)
             {
                 case MaskType.None:
                     break;
-                case MaskType.MeleeMask:
-                    _currentMask = gameObject.AddComponent<MeleeMask>();
+                case MaskType.DashMask:
+                    Debug.Log("Dashing!");
+                    GetComponent<Dash>().TryDash(transform.forward);
                     break;
-                case MaskType.RangedMask:
-                    break;
-                case MaskType.KeyMask:
-                    break;
-                case MaskType.PlatformMask:
-                    break;
-                case MaskType.ForceFieldMask:
+                case MaskType.ShrinkMask:
                     break;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

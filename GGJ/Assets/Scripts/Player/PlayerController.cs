@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Player;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -15,7 +16,8 @@ public class PlayerController : MonoBehaviour
     public Movement _movement;
     public Combat _combat;
     public Throw _Throw;
-
+    private MaskManager _maskManager;
+    
     public void Init(InputDevice[] devices)
     {
         inputActions = new InputMain();
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<Movement>();
         _combat = GetComponent<Combat>();
         _Throw = GetComponent<Throw>();
+        _maskManager = GetComponent<MaskManager>();
     }
 
     float holdTime = 0f;
@@ -57,10 +60,11 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = moveAction?.ReadValue<Vector2>() ?? Vector2.zero;
         Vector2 lookInput = lookAction?.ReadValue<Vector2>() ?? Vector2.zero;
         _movement.Move(moveInput, lookInput);
-
-        if (inputActions.Player.LightAttack.ReadValue<float>() >0)
+        
+        if (inputActions.Player.LightAttack.ReadValue<float>() > 0)
         {
             _combat.LightAttack();
+            _maskManager.TryActivateCurrentMask();
         }
 
         var attack = inputActions.Player.StrongAttack;

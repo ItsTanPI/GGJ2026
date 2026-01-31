@@ -6,7 +6,7 @@ namespace Interactables
 {
     public class MaskPickup : Interactable
     {
-        [SerializeField] private MaskType maskType = MaskType.MeleeMask;
+        [SerializeField] private MaskType maskType = MaskType.DashMask;
         public MaskType GetMaskType() => maskType;
     }
 }

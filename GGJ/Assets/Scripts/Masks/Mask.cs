@@ -5,11 +5,8 @@ namespace Masks
     public enum MaskType
     {
         None,
-        MeleeMask,
-        RangedMask,
-        KeyMask,
-        PlatformMask,
-        ForceFieldMask,
+        DashMask,
+        ShrinkMask
     }
     
     public delegate void GeneralEvent();
