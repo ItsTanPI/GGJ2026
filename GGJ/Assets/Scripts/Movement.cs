@@ -119,11 +119,8 @@ public class Movement : MonoBehaviour
 
         }
         oldDir = Vector3.Lerp(oldDir, dir, 3 * Time.deltaTime);
-        _animatorController.SetFloat("MoveX", oldDir.x);
-        _animatorController.SetFloat("MoveY", oldDir.z);
-
-
-
+        _animatorController.SetFloat("MoveX", oldDir.x * (_currentSpeed / _speed));
+        _animatorController.SetFloat("MoveY", _currentSpeed / _speed * dir.z);
     }
 
     void Gravity()

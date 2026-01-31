@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public Movement _movement;
     public Combat _combat;
+    public Throw _Throw;
 
     public void Init(InputDevice[] devices)
     {
@@ -39,7 +40,11 @@ public class PlayerController : MonoBehaviour
     {
         _movement = GetComponent<Movement>();
         _combat = GetComponent<Combat>();
+        _Throw = GetComponent<Throw>();
     }
+
+    float holdTime = 0f;
+    bool isCharging = false;
 
     private void Update()
     {
@@ -53,10 +58,24 @@ public class PlayerController : MonoBehaviour
         Vector2 lookInput = lookAction?.ReadValue<Vector2>() ?? Vector2.zero;
         _movement.Move(moveInput, lookInput);
 
-        if (inputActions.Player.StrongAttack.WasPerformedThisFrame())
+        if (inputActions.Player.LightAttack.ReadValue<float>() >0)
         {
-            _combat.Attack();
+            _combat.LightAttack();
         }
+
+        var attack = inputActions.Player.StrongAttack;
+
+        if (attack.WasPressedThisFrame())
+        {
+            _Throw.StartCharging();
+        }
+
+        if (attack.WasReleasedThisFrame())
+        {
+            _Throw.ReleaseThrow(lookInput);
+        }
+
+
     }
 
     public void Vibrate(float low = 0.5f, float high = 0.5f, float duration = 0.1f)
