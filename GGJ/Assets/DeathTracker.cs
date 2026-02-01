@@ -22,14 +22,24 @@ public class DeathTracker : MonoBehaviour
     {
         foreach (var item in GameObj)
         {
-            if(item.position.y <= -10)
+            if (item.GetComponent<Health>())
             {
+                if (item.GetComponent<Health>().IsDead)
+                {
+                    StartCoroutine(Delay());
+                    break;
+                }
+            }
+
+            if (item.position.y <= -10)
+            {
+                
                 StartCoroutine(Delay());
                 break;
             }
+
         }
     }
-
 
     IEnumerator Delay()
     {
