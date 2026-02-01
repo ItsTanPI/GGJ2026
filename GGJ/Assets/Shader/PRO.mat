@@ -51,12 +51,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _IsActiveA: 0
+    - _IsActiveA: 1
     - _IsActiveB: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Range: 10
     m_Colors:
-    - _PlayerA: {r: 0, g: 0, b: 0, a: 0}
-    - _PlayerB: {r: -3.6921012, g: -7.722867, b: 12.182686, a: 0}
+    - _PlayerA: {r: 1.5587845, g: -4.6935816, b: -1.8182459, a: 0}
+    - _PlayerB: {r: 6.7669306, g: -5.3976045, b: 6.059055, a: 0}
   m_BuildTextureStacks: []

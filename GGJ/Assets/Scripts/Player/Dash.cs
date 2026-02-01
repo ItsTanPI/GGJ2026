@@ -13,6 +13,7 @@ public class Dash : MonoBehaviour
     private bool isDashing = false;
     private Vector3 dashDirection = Vector3.zero;
     private Vector3 startPosition;
+    public LayerMask collisionMask;
 
     public void TryDash(Vector3 direction)
     {
@@ -30,30 +31,45 @@ public class Dash : MonoBehaviour
         isDashing = true;
         GetComponent<Movement>().enabled = false;
 
-        float radius = 0.5f;
+        float radius = 0.5f;              // Player thickness
+        float skin = 0.1f;               // Small offset so we don’t clip into walls
         float finalDistance = dashDistance;
 
+        RaycastHit hit;
+
+        // Check if something blocks the dash
+        if (Physics.SphereCast(startPosition, radius, dashDirection, out hit, dashDistance, collisionMask))
+        {
+            finalDistance = hit.distance - skin; // Stop before wall
+        }
+
         Vector3 targetPosition = startPosition + dashDirection * finalDistance;
-        
+
         float timer = 0f;
 
         while (timer < dashDuration)
         {
             timer += Time.deltaTime;
             float normalizedTime = timer / dashDuration;
-            
-            float easedTime = 1f - Mathf.Pow(1f - normalizedTime, 3); 
-            transform.position = Vector3.Lerp(startPosition, targetPosition, easedTime);
-            
+
+            float easedTime = 1f - Mathf.Pow(1f - normalizedTime, 3);
+            Vector3 nextPos = Vector3.Lerp(startPosition, targetPosition, easedTime);
+
+            // Extra safety in case something moves into us mid-dash
+            if (Physics.CheckSphere(nextPos, radius, collisionMask))
+                break;
+
+            transform.position = nextPos;
+
             yield return null;
         }
-        
-        transform.position = targetPosition;
+
         GetComponent<Movement>().enabled = true;
         isDashing = false;
 
         StartCoroutine(Cooldown());
     }
+
 
     IEnumerator Cooldown()
     {

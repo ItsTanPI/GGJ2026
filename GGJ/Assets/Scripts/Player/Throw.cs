@@ -87,6 +87,7 @@ public class Throw : MonoBehaviour
         
         Item.transform.SetParent(null);
         Item.transform.localPosition = HandSlot.position;
+        Item.transform.localScale = new Vector3(1, 1, 1);
         Item.isKinematic = false;
         Item.detectCollisions = true;
     }

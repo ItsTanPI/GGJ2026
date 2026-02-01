@@ -723,6 +723,9 @@ MonoBehaviour:
   dashDistance: 3
   dashDuration: 0.2
   dashCooldown: 2
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &140001105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5218,6 +5221,9 @@ MonoBehaviour:
   dashDistance: 3
   dashDuration: 0.2
   dashCooldown: 2
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &949423704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7230,6 +7236,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2737959719013615465, guid: 52fb12e0ac2445e4aadbbc211d917c32,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2935257577472214126, guid: 52fb12e0ac2445e4aadbbc211d917c32,
         type: 3}
       propertyPath: m_Name
